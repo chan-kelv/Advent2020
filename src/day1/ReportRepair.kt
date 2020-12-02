@@ -66,4 +66,13 @@ fun main() {
 
     val threeSumReport = reportRepair.reportRepairThreeSum(reportRepairInputs)
     println("Three sum report = $threeSumReport")
+    /**
+     * Output:
+     * Two number report 1805 and 215 add up to 2020 and produces (1805 x 215 = 388075)
+     * Two sum report = 388075
+     *
+     * Two number report 639 and 823 add up to 1462 and produces (639 x 823 = 525897)
+     * Three number report 558 and two sum report add up to 2020 and produces (558 x 525897 = 293450526)
+     * Three sum report = 293450526
+     */
 }
