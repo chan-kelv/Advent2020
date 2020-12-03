@@ -51,7 +51,7 @@ class PasswordValidator {
             val secondIndex = pwIndexes[1]
 
             val pwRuleChar = inputComponents[1].first() // assuming single char rule --> eg "a"
-            
+
             if (passwordPosRuleValid(inputComponents[2], firstIndex, secondIndex, pwRuleChar)) {
                 validPw++
             }
