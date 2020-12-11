@@ -1,6 +1,10 @@
 package day7
 
-object BaggageCheck {
+class BaggageCheck {
+
+    private val bagMem = HashMap<String, Int>()
+    private val innerBagMem = HashMap<String, Int>()
+
     fun parseBagDesc(descriptions: List<String>): HashMap<String, Set<String>> {
         val bagContains = hashMapOf<String, Set<String>>()
         for (desc in descriptions) {
@@ -31,10 +35,9 @@ object BaggageCheck {
             for (containBagType in containBagTypes) {
                 val containDesc = containBagType.trim().split(" ")
                 if (containDesc[0] == "no") {
-//                    containList.add("no other")
                     continue
                 } else {
-                    containList.add(InnerBag("${containDesc[0]}".toInt(),"${containDesc[1]} ${containDesc[2]}"))
+                    containList.add(InnerBag(containDesc[0].toInt(),"${containDesc[1]} ${containDesc[2]}"))
                 }
             }
             bagContains[bagKey] = containList
@@ -42,16 +45,10 @@ object BaggageCheck {
         return bagContains
     }
 
-    data class InnerBag(val count: Int, val bagKey: String)
-
-    private val bagMem = HashMap<String, Int>()
-    private val innerBagMem = HashMap<String, Int>()
-
     fun innerGold(bagKey: String, innerBags: HashMap<String, Set<InnerBag>>): Int {
         if (innerBagMem.containsKey(bagKey)) return innerBagMem[bagKey]!!
         if (bagKey == "no other") return 0
         var innerGoldCount = 0
-//        val innerGoldRule = innerBags[bagKey]
         if (innerBagMem.containsKey(bagKey)) {
             return innerBagMem[bagKey]!!
         } else {
@@ -104,16 +101,20 @@ object BaggageCheck {
         }
         return goldCount
     }
+
+
+    data class InnerBag(val count: Int, val bagKey: String)
 }
 
 fun main() {
     val bagTypeList = FileHelpers.readFileLineByLineUsingForEachLine("./src/day7/day7Bag.txt")
 //    val bagTypeList = FileHelpers.readFileLineByLineUsingForEachLine("./src/day7/day7BagTest.txt")
-//    val bagRules = BaggageCheck.parseBagDesc(bagTypeList)
-//    val outerCount = BaggageCheck.outerBagCount(bagRules)
-//    println("$outerCount")
+    val bagChecker = BaggageCheck()
+    val bagRules = bagChecker.parseBagDesc(bagTypeList)
+    val outerCount = bagChecker.outerBagCount(bagRules)
+    println("$outerCount")
 
-    val innerBagRules = BaggageCheck.parseBagInnerCount(bagTypeList)
-    val innerGold = BaggageCheck.innerGold("shiny gold", innerBagRules)
+    val innerBagRules = bagChecker.parseBagInnerCount(bagTypeList)
+    val innerGold = bagChecker.innerGold("shiny gold", innerBagRules)
     println("$innerGold")
 }
